@@ -24,31 +24,35 @@ jobs:
 
       - name: Verificar projeto
         run: |
-          echo "Arquivos:"
+          echo "Arquivos do projeto:"
           ls -la
-          echo "package.json encontrado:"
+          echo ""
+          echo "Verificando package.json..."
           test -f package.json
 
       - name: Instalar dependências
-        run: npm install
-
-      - name: Instalar TypeScript
-        run: npm install --save-dev typescript
+        run: |
+          npm install
+          npm install -D typescript
 
       - name: Verificar TypeScript
-        run: npx tsc --version
+        run: |
+          npx tsc --version
 
       - name: Criar Android
-        run: npx cap add android
+        run: |
+          npm install -D typescript
+          npx cap add android
 
       - name: Sincronizar Android
-        run: npx cap sync android
+        run: |
+          npx cap sync android
 
       - name: Gerar APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --stacktrace
 
       - name: Enviar APK
         uses: actions/upload-artifact@v4
