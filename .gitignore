@@ -1,0 +1,5 @@
+.env
+*.sqlite
+node_modules/
+.env.txt
+mental-ai.sqlite
