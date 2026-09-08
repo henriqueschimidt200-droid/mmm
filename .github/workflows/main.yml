@@ -22,10 +22,11 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Verificar arquivos
+      - name: Verificar projeto
         run: |
           echo "Arquivos:"
           ls -la
+          echo "package.json encontrado:"
           test -f package.json
 
       - name: Instalar dependências
@@ -33,6 +34,9 @@ jobs:
 
       - name: Instalar TypeScript
         run: npm install --save-dev typescript
+
+      - name: Verificar TypeScript
+        run: npx tsc --version
 
       - name: Criar Android
         run: npx cap add android
