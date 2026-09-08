@@ -24,14 +24,15 @@ jobs:
 
       - name: Verificar arquivos
         run: |
-          echo "Arquivos do projeto:"
+          echo "Arquivos:"
           ls -la
-          echo ""
-          echo "package.json:"
           test -f package.json
 
       - name: Instalar dependências
         run: npm install
+
+      - name: Instalar TypeScript
+        run: npm install --save-dev typescript
 
       - name: Criar Android
         run: npx cap add android
@@ -41,8 +42,8 @@ jobs:
 
       - name: Gerar APK
         run: |
-          chmod +x android/gradlew
           cd android
+          chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Enviar APK
