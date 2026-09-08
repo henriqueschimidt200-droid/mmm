@@ -21,15 +21,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-          cache: gradle
 
       - name: Verificar projeto
         run: |
-          echo "Node:"
           node --version
-          echo "Java:"
           java -version
-          echo "Arquivos:"
           ls -la
           test -f package.json
 
@@ -58,7 +54,6 @@ jobs:
       - name: Procurar APK
         if: always()
         run: |
-          echo "APKs encontrados:"
           find . -name "*.apk" -type f || true
 
       - name: Enviar APK
