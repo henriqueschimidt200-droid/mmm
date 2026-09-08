@@ -16,28 +16,24 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Configurar Java 21
+      - name: Configurar Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
-
-      - name: Verificar projeto
-        run: |
-          node --version
-          java -version
-          ls -la
-          test -f package.json
 
       - name: Instalar dependências
         run: |
           npm install
           npm install -D typescript
 
-      - name: Verificar Capacitor
+      - name: Verificar arquivos
         run: |
-          npx cap --version
-          npx tsc --version
+          echo "Conteúdo do projeto:"
+          ls -la
+          echo "Conteúdo da pasta public:"
+          ls -la public
+          test -f public/index.html
 
       - name: Criar Android
         run: npx cap add android
@@ -50,11 +46,6 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace --no-daemon
-
-      - name: Procurar APK
-        if: always()
-        run: |
-          find . -name "*.apk" -type f || true
 
       - name: Enviar APK
         uses: actions/upload-artifact@v4
