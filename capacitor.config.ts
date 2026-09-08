@@ -1,10 +1,10 @@
-import { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
+const config = {
   appId: 'com.mentalai.app',
   appName: 'Mental AI',
   webDir: 'public',
-  server: { androidScheme: 'https' }
+  server: {
+    androidScheme: 'https'
+  }
 };
 
 export default config;
