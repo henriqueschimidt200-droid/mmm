@@ -1,0 +1,52 @@
+name: Gerar APK do Mental AI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Verificar arquivos
+        run: |
+          echo "Arquivos do projeto:"
+          ls -la
+          echo ""
+          echo "package.json:"
+          test -f package.json
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Criar Android
+        run: npx cap add android
+
+      - name: Sincronizar Android
+        run: npx cap sync android
+
+      - name: Gerar APK
+        run: |
+          chmod +x android/gradlew
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Enviar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mental-AI-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
